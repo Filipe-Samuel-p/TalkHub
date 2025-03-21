@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres
+    container_name: postgre_db
+    restart: always
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_USER=adm
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=mydb
+      - POSTGRES_ROOT_PASSWORD=1234

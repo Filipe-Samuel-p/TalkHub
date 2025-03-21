@@ -1,0 +1,1 @@
+INSERT INTO tb_student(name,course,sector) VALUES ('Filipe Samuel', 'CC','Back End')
