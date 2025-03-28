@@ -1,5 +1,6 @@
 package filipeProject.example.authenticationJwt.entities;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,19 +8,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_student")
+@Table(name = "tb_speaker")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Student {
+public class Speaker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String course;
-    private String sector;
+    private String resume;
+    private String specialties;
+    private String urlLinkedin;
+    private String urlImage;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
