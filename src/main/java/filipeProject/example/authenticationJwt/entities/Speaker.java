@@ -18,8 +18,7 @@ import java.util.List;
 public class Speaker {
 
     @Id
-    @Column(name = "user_id")
-    private Long id;
+    private Long userId;
 
     private String resume;
     private String specialties;
