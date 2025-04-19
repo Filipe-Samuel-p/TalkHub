@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tb_speaker")
 @AllArgsConstructor
@@ -21,12 +23,14 @@ public class Speaker {
 
     private String resume;
     private String specialties;
-    private String urlLinkedin;
-    private String urlImage;
+    private String institution;
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "speaker")
+    private List<Talk> talks;
 
 }

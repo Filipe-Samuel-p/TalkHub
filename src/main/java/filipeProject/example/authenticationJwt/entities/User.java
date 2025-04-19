@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_user")
@@ -30,11 +31,27 @@ public class User {
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Instant creationDate;
 
-    private boolean activeUser;
+    private String biography;
+    private String imgUrl;
+    private String imgBackground;
+    private int numFollowers;
+    private int numFollowing;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Speaker speaker;
+
+    @ManyToMany
+    @JoinTable(name = "tb_user_following",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "following_id"))
+    private List<User> following;
+
+    @ManyToMany(mappedBy = "following")
+    private List<User> followers;
+
+    @OneToMany(mappedBy = "user")
+    private List<Registrations> registrations;
 
     public void setCreationDateNow() {
         this.creationDate = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).toInstant();
