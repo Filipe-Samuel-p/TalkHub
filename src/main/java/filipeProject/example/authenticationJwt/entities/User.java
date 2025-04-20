@@ -31,7 +31,9 @@ public class User {
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Instant creationDate;
 
+    @Column(columnDefinition = "TEXT")
     private String biography;
+
     private String imgUrl;
     private String imgBackground;
     private int numFollowers;

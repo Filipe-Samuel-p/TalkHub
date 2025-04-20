@@ -1,7 +1,6 @@
 package filipeProject.example.authenticationJwt.entities;
 
 
-import filipeProject.example.authenticationJwt.enums.Payment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,31 +10,27 @@ import lombok.Setter;
 import java.time.Instant;
 import java.util.List;
 
-
 @Entity
-@Table(name = "tb_registrations")
+@Table(name = "tb_event")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Registrations {
+public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Instant registrationDate;
-    private Payment paymentStatus;
-    private Boolean isConfirmed;
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(columnDefinition = "TEXT")
+    private String description;
+    private Instant startDate;
 
-    @ManyToOne
-    @JoinColumn(name = "talk_id")
-    private Talk talk;
+    private Instant endDate;
+    private String place;
 
-
-
+    @OneToMany(mappedBy = "event")
+    private List<Talk> talks;
 }

@@ -2,11 +2,23 @@ package filipeProject.example.authenticationJwt.entities;
 
 import filipeProject.example.authenticationJwt.enums.DifficultyLevel;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
 @Table(name = "tb_talk")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Talk {
 
     @Id
@@ -14,13 +26,16 @@ public class Talk {
     private Long id;
 
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
-    private String startTime;
-    private String duration;
+    private Instant startTime;
+
+    private Duration duration;
     private int totalCapacity;
     private int numberAvailable;
     private String local;
-    private Enum<DifficultyLevel> difficultyLevel;
+    private DifficultyLevel difficultyLevel;
 
     @OneToMany(mappedBy = "talk")
     private List<Registrations> registrations;
@@ -29,6 +44,14 @@ public class Talk {
     @JoinColumn(name = "speaker_id")
     private Speaker speaker;
 
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
 
+    @ManyToMany
+    @JoinTable(name = "tb_talk_category",
+    joinColumns = @JoinColumn(name = "talk_id"),
+    inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
 
 }
