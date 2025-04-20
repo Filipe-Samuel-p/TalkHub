@@ -134,7 +134,7 @@ O sistema utiliza controle de acesso baseado em papéis:
 
 ## Modelagem das entidades
 
-<img src="src/main/java/filipeProject/example/authenticationJwt/images/TalkHub.drawio%20(1).png" alt="Modelagem do banco">
+<img src="images/TalkHub.drawio%20(1).png" alt="Modelagem do banco">
 
 ## 📦 Como Rodar Localmente
 
