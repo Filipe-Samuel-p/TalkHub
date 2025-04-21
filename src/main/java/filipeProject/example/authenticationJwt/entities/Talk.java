@@ -35,6 +35,8 @@ public class Talk {
     private int totalCapacity;
     private int numberAvailable;
     private String local;
+
+    @Enumerated(EnumType.STRING)
     private DifficultyLevel difficultyLevel;
 
     @OneToMany(mappedBy = "talk")

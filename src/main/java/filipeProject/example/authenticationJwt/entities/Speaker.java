@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_speaker")
@@ -18,7 +19,7 @@ import java.util.List;
 public class Speaker {
 
     @Id
-    private Long userId;
+    private UUID userId;
 
     private String resume;
     private String specialties;

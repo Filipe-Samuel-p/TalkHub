@@ -1,15 +1,18 @@
 package filipeProject.example.authenticationJwt.entities;
 
+import filipeProject.example.authenticationJwt.dto.LoginRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -56,7 +59,13 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Registrations> registrations;
 
-    public void setCreationDateNow() {
-        this.creationDate = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).toInstant();
+    @ManyToMany
+    @JoinTable(name = "tb_user_role",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
+    public Boolean isLoginCorrect(LoginRequestDTO loginRequestDTO, PasswordEncoder password){
+        return password.matches(loginRequestDTO.password(),this.password);
     }
 }

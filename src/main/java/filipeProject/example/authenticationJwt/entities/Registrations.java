@@ -25,7 +25,10 @@ public class Registrations {
     private Long id;
 
     private Instant registrationDate;
+
+    @Enumerated(EnumType.STRING)
     private Payment paymentStatus;
+
     private Boolean isConfirmed;
 
     @ManyToOne
@@ -35,7 +38,5 @@ public class Registrations {
     @ManyToOne
     @JoinColumn(name = "talk_id")
     private Talk talk;
-
-
 
 }
