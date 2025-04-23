@@ -1,18 +1,19 @@
 package filipeProject.example.authenticationJwt.controllers;
 
+import filipeProject.example.authenticationJwt.dto.UserProfileDTO;
 import filipeProject.example.authenticationJwt.dto.UserRegisterDTO;
 import filipeProject.example.authenticationJwt.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/users")
 public class UserController {
 
     private UserService service;
@@ -28,5 +29,13 @@ public class UserController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
+    }
+
+    @GetMapping(value = "/profile/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<UserProfileDTO> userProfile(@PathVariable UUID id){
+        var profile = service.userProfile(id);
+        return ResponseEntity.ok(profile);
+
     }
 }

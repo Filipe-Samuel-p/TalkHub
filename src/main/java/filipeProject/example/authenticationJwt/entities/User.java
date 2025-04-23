@@ -54,7 +54,7 @@ public class User {
     @JoinTable(name = "tb_user_following",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "following_id"))
-    private List<User> following;
+    private List<User> following = new ArrayList<>();
 
     @ManyToMany(mappedBy = "following")
     private List<User> followers = new ArrayList<>();
