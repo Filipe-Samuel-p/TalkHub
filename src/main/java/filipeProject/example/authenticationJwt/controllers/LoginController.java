@@ -3,7 +3,7 @@ package filipeProject.example.authenticationJwt.controllers;
 
 import filipeProject.example.authenticationJwt.dto.LoginRequestDTO;
 import filipeProject.example.authenticationJwt.dto.LoginResponseDTO;
-import filipeProject.example.authenticationJwt.dto.UserDTO;
+import filipeProject.example.authenticationJwt.dto.UserRegisterDTO;
 import filipeProject.example.authenticationJwt.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,12 +25,6 @@ public class LoginController {
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO dto){
         var response = service.login(dto);
         return ResponseEntity.ok(response);
-    }
-
-    @PostMapping(value = "/createAccount")
-    public ResponseEntity<UserDTO> createAccount(@RequestBody UserDTO dto){
-
-       //....
     }
 
 

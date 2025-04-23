@@ -11,9 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_user")
@@ -28,8 +26,13 @@ public class User {
     private UUID id;
 
     private String name;
+
+    @Column(unique = true)
     private String email;
+
     private String password;
+
+    @Column(unique = true)
     private String cpf;
 
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
@@ -54,16 +57,16 @@ public class User {
     private List<User> following;
 
     @ManyToMany(mappedBy = "following")
-    private List<User> followers;
+    private List<User> followers = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Registrations> registrations;
+    private List<Registrations> registrations = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "tb_user_role",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     public Boolean isLoginCorrect(LoginRequestDTO loginRequestDTO, PasswordEncoder password){
         return password.matches(loginRequestDTO.password(),this.password);

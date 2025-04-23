@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,5 +33,5 @@ public class Event {
     private String place;
 
     @OneToMany(mappedBy = "event")
-    private List<Talk> talks;
+    private List<Talk> talks = new ArrayList<>();
 }
