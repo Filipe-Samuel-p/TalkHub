@@ -24,8 +24,7 @@ public class UserProfileDTO {
     private String imgBackground;
     private int numFollowers;
     private int numFollowing;
-    private List<User> following;
-    private List<User> followers;
+
 
     public UserProfileDTO(User user) {
         this.id = user.getId();
@@ -37,7 +36,5 @@ public class UserProfileDTO {
         this.imgBackground = user.getImgBackground();
         this.numFollowers = user.getNumFollowers();
         this.numFollowing = user.getNumFollowing();
-        this.following = user.getFollowing();
-        this.followers = user.getFollowers();
     }
 }
