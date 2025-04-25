@@ -39,11 +39,11 @@ public class UserController {
         return ResponseEntity.ok(profile);
     }
 
-    @PutMapping(value = "/me")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<UpdateUserDTO> updateUser (@RequestBody UpdateUserDTO dto, JwtAuthenticationToken token){
-        var user = service.updateUser(dto,token);
-        return ResponseEntity.ok(user);
+    @DeleteMapping(value = {"/{id}"})
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteUser (@PathVariable UUID id){
+        service.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/me")
@@ -53,5 +53,26 @@ public class UserController {
         var profile = service.userProfile(id);
         return ResponseEntity.ok(profile);
     }
+
+    @PutMapping(value = "/me")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<UpdateUserDTO> updateUser (@RequestBody UpdateUserDTO dto, JwtAuthenticationToken token){
+        var user = service.updateUser(dto,token);
+        return ResponseEntity.ok(user);
+    }
+
+    @DeleteMapping(value = {"/me"})
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Void> deletePersonalAccount (JwtAuthenticationToken token){
+        UUID id = UUID.fromString(token.getName());
+        service.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
+
+
+
 
 }

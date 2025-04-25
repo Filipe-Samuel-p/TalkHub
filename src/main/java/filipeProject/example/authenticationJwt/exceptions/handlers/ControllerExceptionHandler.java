@@ -3,6 +3,7 @@ package filipeProject.example.authenticationJwt.exceptions.handlers;
 
 import filipeProject.example.authenticationJwt.dto.CustomErrorDTO;
 import filipeProject.example.authenticationJwt.exceptions.BadCredentialsException;
+import filipeProject.example.authenticationJwt.exceptions.MethodArgumentTypeMismatchException;
 import filipeProject.example.authenticationJwt.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -29,4 +30,6 @@ public class ControllerExceptionHandler {
                 exception.getMessage(),request.getRequestURI());
         return ResponseEntity.status(httpStatus).body(customError);
     }
+
+
 }

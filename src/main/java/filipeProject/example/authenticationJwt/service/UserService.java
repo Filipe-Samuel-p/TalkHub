@@ -6,6 +6,7 @@ import filipeProject.example.authenticationJwt.dto.userDTOs.UserRegisterDTO;
 import filipeProject.example.authenticationJwt.entities.User;
 import filipeProject.example.authenticationJwt.enums.RoleName;
 import filipeProject.example.authenticationJwt.exceptions.AccessDeniedException;
+import filipeProject.example.authenticationJwt.exceptions.DataIntegrityViolationException;
 import filipeProject.example.authenticationJwt.exceptions.ResourceNotFoundException;
 import filipeProject.example.authenticationJwt.repositories.RoleRepository;
 import filipeProject.example.authenticationJwt.repositories.UserRepository;
@@ -87,6 +88,22 @@ public class UserService {
         user = repository.save(user);
 
         return new UpdateUserDTO(user);
+
+    }
+
+    public void deleteUser(UUID id){
+
+        boolean userExist = repository.existsById(id);
+        if(!userExist){
+            throw new ResourceNotFoundException("Usuário não encontrado");
+        }
+
+        try{
+            repository.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("Falha de integridade referencial");
+        }
 
     }
 
