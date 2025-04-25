@@ -1,4 +1,4 @@
-package filipeProject.example.authenticationJwt.dto;
+package filipeProject.example.authenticationJwt.dto.userDTOs;
 
 
 import filipeProject.example.authenticationJwt.entities.User;
@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor

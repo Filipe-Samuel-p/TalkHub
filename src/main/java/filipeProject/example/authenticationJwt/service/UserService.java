@@ -1,21 +1,21 @@
 package filipeProject.example.authenticationJwt.service;
 
-import filipeProject.example.authenticationJwt.dto.UserProfileDTO;
-import filipeProject.example.authenticationJwt.dto.UserRegisterDTO;
-import filipeProject.example.authenticationJwt.entities.Role;
+import filipeProject.example.authenticationJwt.dto.userDTOs.UpdateUserDTO;
+import filipeProject.example.authenticationJwt.dto.userDTOs.UserProfileDTO;
+import filipeProject.example.authenticationJwt.dto.userDTOs.UserRegisterDTO;
 import filipeProject.example.authenticationJwt.entities.User;
 import filipeProject.example.authenticationJwt.enums.RoleName;
+import filipeProject.example.authenticationJwt.exceptions.AccessDeniedException;
 import filipeProject.example.authenticationJwt.exceptions.ResourceNotFoundException;
 import filipeProject.example.authenticationJwt.repositories.RoleRepository;
 import filipeProject.example.authenticationJwt.repositories.UserRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
+
 
 @Service
 public class UserService {
@@ -48,6 +48,49 @@ public class UserService {
 
     }
 
+    public UpdateUserDTO updateUser (UpdateUserDTO dto, JwtAuthenticationToken token){
+
+        var roles = token.getAuthorities()
+                .stream()
+                .map(Object::toString)
+                .toList();
+
+
+        boolean isAdmin = roles.contains("ROLE_ADMIN");
+        UUID userId = UUID.fromString(token.getName());
+
+        var user = repository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        if (!isAdmin && !user.getId().equals(userId)) {
+            throw new AccessDeniedException("Acesso negado");
+        }
+
+        if(dto.getName() != null){
+            user.setName(dto.getName());
+        }
+
+        if(dto.getEmail() != null){
+            user.setEmail(dto.getEmail());
+
+        } if(dto.getBiography() != null){
+            user.setBiography(dto.getBiography());
+        }
+
+        if(dto.getImgUrl() != null){
+            user.setImgUrl(dto.getImgUrl());
+        }
+
+        if(dto.getImgBackground() != null){
+            user.setImgBackground(dto.getImgBackground());
+        }
+
+        user = repository.save(user);
+
+        return new UpdateUserDTO(user);
+
+    }
+
 
 
     private void dtoRegisterToEntity(UserRegisterDTO dto, User entity){
@@ -57,5 +100,6 @@ public class UserService {
         entity.setCpf(dto.getCpf());
         entity.setBiography(dto.getBiography());
     }
+
 
 }

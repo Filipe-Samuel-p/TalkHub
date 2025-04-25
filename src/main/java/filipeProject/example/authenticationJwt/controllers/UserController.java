@@ -1,7 +1,8 @@
 package filipeProject.example.authenticationJwt.controllers;
 
-import filipeProject.example.authenticationJwt.dto.UserProfileDTO;
-import filipeProject.example.authenticationJwt.dto.UserRegisterDTO;
+import filipeProject.example.authenticationJwt.dto.userDTOs.UpdateUserDTO;
+import filipeProject.example.authenticationJwt.dto.userDTOs.UserProfileDTO;
+import filipeProject.example.authenticationJwt.dto.userDTOs.UserRegisterDTO;
 import filipeProject.example.authenticationJwt.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +37,14 @@ public class UserController {
     public ResponseEntity<UserProfileDTO> userProfile(@PathVariable UUID id){
         var profile = service.userProfile(id);
         return ResponseEntity.ok(profile);
+    }
+
+    @PutMapping(value = "/me")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<UpdateUserDTO> updateUser (@RequestBody UpdateUserDTO dto, JwtAuthenticationToken token){
+        var user = service.updateUser(dto,token);
+        return ResponseEntity.ok(user);
 
     }
+
 }
