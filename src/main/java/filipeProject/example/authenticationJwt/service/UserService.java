@@ -6,6 +6,7 @@ import filipeProject.example.authenticationJwt.dto.userDTOs.UserRegisterDTO;
 import filipeProject.example.authenticationJwt.entities.User;
 import filipeProject.example.authenticationJwt.enums.RoleName;
 import filipeProject.example.authenticationJwt.exceptions.AccessDeniedException;
+import filipeProject.example.authenticationJwt.exceptions.ConflictException;
 import filipeProject.example.authenticationJwt.exceptions.DataIntegrityViolationException;
 import filipeProject.example.authenticationJwt.exceptions.ResourceNotFoundException;
 import filipeProject.example.authenticationJwt.repositories.RoleRepository;
@@ -104,6 +105,58 @@ public class UserService {
         catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("Falha de integridade referencial");
         }
+
+    }
+
+    public void addNewFollower(UUID userToFollowId, JwtAuthenticationToken token){
+
+        var userToFollow = repository.findById(userToFollowId)
+                .orElseThrow(()-> new ResourceNotFoundException("Seguidor não encontrado"));
+
+        var follower = repository.findById(UUID.fromString(token.getName())) // usuário logado
+                .orElseThrow(()-> new ResourceNotFoundException("Usuário principal não encontrado"));
+
+        var isFollow = follower.getFollowing().contains(userToFollow);
+        var followYourSelf = userToFollow.getId().equals(follower.getId());
+
+        if (followYourSelf || isFollow) {
+            throw new ConflictException("Você não pode seguir a si mesmo ou você ja esta seguindo este usuário.");
+        }
+
+        follower.getFollowing().add(userToFollow);
+        follower.setNumFollowing(follower.getFollowing().size());
+
+        userToFollow.getFollowers().add(follower);
+        userToFollow.setNumFollowers(userToFollow.getFollowers().size());
+
+        repository.save(userToFollow);
+        repository.save(follower);
+
+    }
+
+    public void deleteFollower(UUID userToUnfollowId, JwtAuthenticationToken token){
+
+        var userToUnfollow = repository.findById(userToUnfollowId)
+                .orElseThrow(()-> new ResourceNotFoundException("Usuário que quer deixar de seguir não encontrado"));
+
+        var follower = repository.findById(UUID.fromString(token.getName())) // usuário logado
+                .orElseThrow(()-> new ResourceNotFoundException("Usuário principal não encontrado"));
+
+        var isFollow = follower.getFollowing().contains(userToUnfollow);
+        var unfollowYourSelf = userToUnfollow.getId().equals(follower.getId());
+
+        if(!isFollow || unfollowYourSelf){
+            throw new ConflictException(" Usuário principal não esta seguindo o outro usuário ou esta querendo deixar de seguir a si mesmo");
+        }
+
+        follower.getFollowing().remove(userToUnfollow);
+        follower.setNumFollowing(follower.getFollowing().size()); // não precisará checar números negativos pq esta sendo atualizado com o tamanho da lista.
+
+        userToUnfollow.getFollowers().remove(follower);
+        userToUnfollow.setNumFollowers(userToUnfollow.getFollowers().size());
+
+        repository.save(follower);
+        repository.save(userToUnfollow);
 
     }
 

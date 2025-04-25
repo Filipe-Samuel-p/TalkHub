@@ -3,6 +3,7 @@ package filipeProject.example.authenticationJwt.exceptions.handlers;
 
 import filipeProject.example.authenticationJwt.dto.CustomErrorDTO;
 import filipeProject.example.authenticationJwt.exceptions.BadCredentialsException;
+import filipeProject.example.authenticationJwt.exceptions.ConflictException;
 import filipeProject.example.authenticationJwt.exceptions.MethodArgumentTypeMismatchException;
 import filipeProject.example.authenticationJwt.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,14 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<CustomErrorDTO> resourceNotFound(ResourceNotFoundException exception, HttpServletRequest request){
         var httpStatus = HttpStatus.NOT_FOUND;
+        var customError = new CustomErrorDTO(Instant.now(),httpStatus.value(),
+                exception.getMessage(),request.getRequestURI());
+        return ResponseEntity.status(httpStatus).body(customError);
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<CustomErrorDTO> resourceNotFound(ConflictException exception, HttpServletRequest request){
+        var httpStatus = HttpStatus.CONFLICT;
         var customError = new CustomErrorDTO(Instant.now(),httpStatus.value(),
                 exception.getMessage(),request.getRequestURI());
         return ResponseEntity.status(httpStatus).body(customError);

@@ -6,6 +6,7 @@ import filipeProject.example.authenticationJwt.dto.userDTOs.UserRegisterDTO;
 import filipeProject.example.authenticationJwt.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,14 +26,13 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserRegisterDTO> newUser(@RequestBody UserRegisterDTO dto){
-
         dto = service.newUser(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 
-    @GetMapping(value = "/profile/{id}")
+    @GetMapping(value = "{id}/profile")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserProfileDTO> userProfile(@PathVariable UUID id){
         var profile = service.userProfile(id);
@@ -68,6 +68,24 @@ public class UserController {
         service.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping(value = "/{id}/follow")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Void> addNewFollower(@PathVariable UUID id, JwtAuthenticationToken token){
+
+        service.addNewFollower(id, token);
+        return ResponseEntity.noContent().build();
+
+    }
+
+    @DeleteMapping(value = {"/{id}/unfollow"})
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Void> deleteFollower(@PathVariable UUID id, JwtAuthenticationToken token){
+        service.deleteFollower(id,token);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 
 
