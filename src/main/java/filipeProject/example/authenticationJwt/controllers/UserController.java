@@ -44,7 +44,14 @@ public class UserController {
     public ResponseEntity<UpdateUserDTO> updateUser (@RequestBody UpdateUserDTO dto, JwtAuthenticationToken token){
         var user = service.updateUser(dto,token);
         return ResponseEntity.ok(user);
+    }
 
+    @GetMapping(value = "/me")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<UserProfileDTO> personalProfile (JwtAuthenticationToken token){
+        var id = UUID.fromString(token.getName());
+        var profile = service.userProfile(id);
+        return ResponseEntity.ok(profile);
     }
 
 }

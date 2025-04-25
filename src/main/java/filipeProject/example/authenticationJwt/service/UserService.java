@@ -45,7 +45,6 @@ public class UserService {
         var userProfile = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
         return new UserProfileDTO(userProfile);
-
     }
 
     public UpdateUserDTO updateUser (UpdateUserDTO dto, JwtAuthenticationToken token){
