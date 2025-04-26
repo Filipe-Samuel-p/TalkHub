@@ -1,5 +1,6 @@
 package filipeProject.example.authenticationJwt.service;
 
+import filipeProject.example.authenticationJwt.dto.userDTOs.FollowerAndFollowingDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.UpdateUserDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.UserProfileDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.UserRegisterDTO;
@@ -11,12 +12,19 @@ import filipeProject.example.authenticationJwt.exceptions.DataIntegrityViolation
 import filipeProject.example.authenticationJwt.exceptions.ResourceNotFoundException;
 import filipeProject.example.authenticationJwt.repositories.RoleRepository;
 import filipeProject.example.authenticationJwt.repositories.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
 
 
 @Service
@@ -160,6 +168,54 @@ public class UserService {
 
     }
 
+    @Transactional(readOnly = true)
+    public Page<FollowerAndFollowingDTO> allUserFollowers(UUID id, Pageable pageable) {
+        var user = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        var followers = new ArrayList<>(user.getFollowers());
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), followers.size());
+
+        var followerDTOs = followers.subList(start, end)
+                .stream()
+                .map(FollowerAndFollowingDTO::new)
+                .toList();
+
+        return new PageImpl<>(followerDTOs, pageable, followers.size());
+    }
+
+
+    @Transactional(readOnly = true)
+    public Page<FollowerAndFollowingDTO> getLoggedUserFollowers(JwtAuthenticationToken token, Pageable pageable) {
+        var userId = UUID.fromString(token.getName());
+        var user = repository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        var followers = user.getFollowers();
+        return toPage(followers, pageable)
+                .map(FollowerAndFollowingDTO::new);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<FollowerAndFollowingDTO> getLoggedUserFollowing(JwtAuthenticationToken token, Pageable pageable) {
+        var userId = UUID.fromString(token.getName());
+        var user = repository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        var following = user.getFollowing();
+        return toPage(following, pageable)
+                .map(FollowerAndFollowingDTO::new);
+    }
+
+
+    private <T> Page<T> toPage(List<T> list, Pageable pageable) {
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), list.size());
+        List<T> content = list.subList(start, end);
+        return new PageImpl<>(content, pageable, list.size());
+    }
 
 
     private void dtoRegisterToEntity(UserRegisterDTO dto, User entity){
