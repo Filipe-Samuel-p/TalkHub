@@ -1,33 +1,28 @@
 package filipeProject.example.authenticationJwt.dto.speakerDTOs;
 
 
-import filipeProject.example.authenticationJwt.entities.SpeakerRequest;
+import filipeProject.example.authenticationJwt.entities.Speaker;
 import filipeProject.example.authenticationJwt.entities.User;
-import filipeProject.example.authenticationJwt.enums.SpeakerRequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
 import java.util.UUID;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-public class SpeakerRequestDTO {
-
-    private UUID id;
+public class SpeakerDTO {
+    private String resume;
+    private String specialties;
+    private String institution;
     private UserDTO user;
-    private Instant requestDate;
-    private SpeakerRequestStatus status;
 
-
-    public SpeakerRequestDTO(SpeakerRequest request){
-       id = request.getId();
-       user = new UserDTO(request.getUser());
-       requestDate = request.getRequestDate();
-       status = request.getStatus();
-
+    public SpeakerDTO(Speaker speaker){
+        resume = speaker.getResume();
+        specialties = speaker.getSpecialties();
+        institution = speaker.getInstitution();
+        user = new UserDTO(speaker.getUser());
     }
 
     @NoArgsConstructor
@@ -52,5 +47,4 @@ public class SpeakerRequestDTO {
             numFollowing = user.getNumFollowing();
         }
     }
-
 }
