@@ -24,3 +24,8 @@ INSERT INTO tb_user_role(role_id, user_id) VALUES (2,'b8c12a93-45f7-42d8-9e3b-67
 INSERT INTO tb_user_role(role_id, user_id) VALUES (2,'c4e98d25-61a3-47bf-85f1-4d7b9c632a8e');
 
 INSERT INTO tb_user_following(user_id,following_id) VALUES ('b8c12a93-45f7-42d8-9e3b-67a2c5d84e19','c4e98d25-61a3-47bf-85f1-4d7b9c632a8e');
+
+INSERT INTO tb_speaker_request (id, user_id, is_approved, request_date)
+VALUES
+    ('123e4567-e89b-12d3-a456-426614174000', 'b8c12a93-45f7-42d8-9e3b-67a2c5d84e19', false, CURRENT_TIMESTAMP),
+    ('123e4567-e89b-12d3-a456-426614174001', 'c4e98d25-61a3-47bf-85f1-4d7b9c632a8e', false, CURRENT_TIMESTAMP);

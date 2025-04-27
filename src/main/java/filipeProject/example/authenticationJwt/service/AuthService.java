@@ -1,7 +1,7 @@
 package filipeProject.example.authenticationJwt.service;
 
-import filipeProject.example.authenticationJwt.dto.LoginRequestDTO;
-import filipeProject.example.authenticationJwt.dto.LoginResponseDTO;
+import filipeProject.example.authenticationJwt.dto.loginDTOs.LoginRequestDTO;
+import filipeProject.example.authenticationJwt.dto.loginDTOs.LoginResponseDTO;
 import filipeProject.example.authenticationJwt.exceptions.BadCredentialsException;
 import filipeProject.example.authenticationJwt.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

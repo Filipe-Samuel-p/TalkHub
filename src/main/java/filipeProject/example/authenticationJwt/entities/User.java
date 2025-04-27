@@ -1,6 +1,6 @@
 package filipeProject.example.authenticationJwt.entities;
 
-import filipeProject.example.authenticationJwt.dto.LoginRequestDTO;
+import filipeProject.example.authenticationJwt.dto.loginDTOs.LoginRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,6 @@ import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.*;
 
 @Entity

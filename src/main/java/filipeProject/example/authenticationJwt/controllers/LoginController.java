@@ -1,8 +1,8 @@
 package filipeProject.example.authenticationJwt.controllers;
 
 
-import filipeProject.example.authenticationJwt.dto.LoginRequestDTO;
-import filipeProject.example.authenticationJwt.dto.LoginResponseDTO;
+import filipeProject.example.authenticationJwt.dto.loginDTOs.LoginRequestDTO;
+import filipeProject.example.authenticationJwt.dto.loginDTOs.LoginResponseDTO;
 import filipeProject.example.authenticationJwt.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
