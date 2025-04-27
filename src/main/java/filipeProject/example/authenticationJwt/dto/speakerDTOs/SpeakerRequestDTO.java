@@ -3,6 +3,7 @@ package filipeProject.example.authenticationJwt.dto.speakerDTOs;
 
 import filipeProject.example.authenticationJwt.entities.SpeakerRequest;
 import filipeProject.example.authenticationJwt.entities.User;
+import filipeProject.example.authenticationJwt.enums.SpeakerRequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,14 +19,15 @@ public class SpeakerRequestDTO {
     private UUID id;
     private UserDTO user;
     private Instant requestDate;
-    private boolean isApproved;
+    private SpeakerRequestStatus status;
 
 
     public SpeakerRequestDTO(SpeakerRequest request){
        id = request.getId();
        user = new UserDTO(request.getUser());
        requestDate = request.getRequestDate();
-       isApproved = request.isApproved();
+       status = request.getStatus();
+
     }
 
     @NoArgsConstructor
