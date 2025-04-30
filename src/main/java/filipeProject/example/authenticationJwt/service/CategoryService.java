@@ -3,6 +3,7 @@ package filipeProject.example.authenticationJwt.service;
 import filipeProject.example.authenticationJwt.dto.categoryDTOs.CategoryAndTalksDTO;
 import filipeProject.example.authenticationJwt.dto.categoryDTOs.CategoryDTO;
 import filipeProject.example.authenticationJwt.entities.Category;
+import filipeProject.example.authenticationJwt.exceptions.ConflictException;
 import filipeProject.example.authenticationJwt.exceptions.DataIntegrityViolationException;
 import filipeProject.example.authenticationJwt.exceptions.ResourceNotFoundException;
 import filipeProject.example.authenticationJwt.repositories.CategoryRepository;
@@ -43,19 +44,20 @@ public class CategoryService {
 
     }
 
-    public void deleteCategory(Long id){
+    public void deleteCategory(Long id) {
+        var category = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
 
-        var isCategoryExist = repository.existsById(id);
-        if(!isCategoryExist){
-            throw new ResourceNotFoundException("Categoria não encontrada");
+        if (!category.getTalks().isEmpty()) {
+            throw new ConflictException("Essa categoria tem palestras associadas");
         }
 
         try {
             repository.deleteById(id);
-        }
-        catch (DataIntegrityViolationException e){
-            throw new DataIntegrityViolationException("Falha de integridade referencial");
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("Falha de integridade referencial");
         }
     }
+
 
 }

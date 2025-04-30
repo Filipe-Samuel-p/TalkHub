@@ -2,10 +2,7 @@ package filipeProject.example.authenticationJwt.exceptions.handlers;
 
 
 import filipeProject.example.authenticationJwt.dto.CustomErrorDTO;
-import filipeProject.example.authenticationJwt.exceptions.BadCredentialsException;
-import filipeProject.example.authenticationJwt.exceptions.ConflictException;
-import filipeProject.example.authenticationJwt.exceptions.MethodArgumentTypeMismatchException;
-import filipeProject.example.authenticationJwt.exceptions.ResourceNotFoundException;
+import filipeProject.example.authenticationJwt.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +30,13 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<CustomErrorDTO> resourceNotFound(ConflictException exception, HttpServletRequest request){
+    public ResponseEntity<CustomErrorDTO> conflictException(ConflictException exception, HttpServletRequest request){
         var httpStatus = HttpStatus.CONFLICT;
         var customError = new CustomErrorDTO(Instant.now(),httpStatus.value(),
                 exception.getMessage(),request.getRequestURI());
         return ResponseEntity.status(httpStatus).body(customError);
     }
+
 
 
 }
