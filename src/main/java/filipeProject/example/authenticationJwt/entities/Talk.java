@@ -1,6 +1,6 @@
 package filipeProject.example.authenticationJwt.entities;
 
-import filipeProject.example.authenticationJwt.enums.DifficultyLevel;
+import filipeProject.example.authenticationJwt.enums.DifficultyTalkLevel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,13 +32,14 @@ public class Talk {
     private String description;
     private Instant startTime;
 
+
     private Duration duration;
     private int totalCapacity;
     private int numberAvailable;
     private String local;
 
     @Enumerated(EnumType.STRING)
-    private DifficultyLevel difficultyLevel;
+    private DifficultyTalkLevel difficultyLevel;
 
     @OneToMany(mappedBy = "talk")
     private List<Registrations> registrations;

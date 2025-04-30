@@ -30,3 +30,31 @@ INSERT INTO tb_speaker_request (id, user_id, status, request_date)
 VALUES
     ('123e4567-e89b-12d3-a456-426614174000', 'b8c12a93-45f7-42d8-9e3b-67a2c5d84e19', 'PENDING', CURRENT_TIMESTAMP),
     ('123e4567-e89b-12d3-a456-426614174001', 'c4e98d25-61a3-47bf-85f1-4d7b9c632a8e', 'PENDING', CURRENT_TIMESTAMP);
+
+
+INSERT INTO tb_category(name) VALUES ('Inteligência Artificial'),
+                                     ('Ciência de Dados'),
+                                     ('Matemática'),
+                                     ('Mercado de TI');
+
+INSERT INTO tb_talk ( title, description, start_time, duration, total_capacity, number_available, local, difficulty_level )
+VALUES (
+           'Introdução ao Spring Boot',
+           'Uma palestra voltada para desenvolvedores iniciantes que desejam aprender como criar aplicações web com o framework Spring Boot.',
+           '2025-05-10T09:00:00Z',
+           120, -- 2 horas em minutos
+           100, 100, 'Auditório A', 'BASIC'
+       );
+
+INSERT INTO tb_talk ( title, description, start_time, duration, total_capacity, number_available, local, difficulty_level )
+VALUES (
+           'Java para Profissionais',
+           'Uma palestra voltada para desenvolvedores iniciantes que desejam aprender como criar aplicações web com o framework Spring Boot.',
+           '2025-05-10T09:00:00Z',
+           120, -- 2 horas em minutos
+           100, 100, 'Auditório A', 'BASIC'
+       );
+
+
+INSERT INTO tb_talk_category(talk_id, category_id) VALUES ('1', '4');
+INSERT INTO tb_talk_category(talk_id, category_id) VALUES ('2', '4');
