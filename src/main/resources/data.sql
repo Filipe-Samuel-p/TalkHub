@@ -58,3 +58,9 @@ VALUES (
 
 INSERT INTO tb_talk_category(talk_id, category_id) VALUES ('1', '4');
 INSERT INTO tb_talk_category(talk_id, category_id) VALUES ('2', '4');
+
+INSERT INTO tb_event (name, description, start_Date, end_Date, place) VALUES
+    ('Congresso de Tecnologia 2025', 'Evento voltado para inovações tecnológicas e tendências em TI.', '2025-06-15T09:00:00Z', '2025-06-15T18:00:00Z', 'Centro de Convenções, São Paulo');
+
+INSERT INTO tb_event(name, description, start_Date, end_Date, place) VALUES
+    ('Feira de Ciências Universitária', 'Apresentação de projetos científicos e experimentos de alunos.', '2025-09-10T10:00:00Z', '2025-09-10T16:00:00Z', 'Campus Principal, Auditório 2');

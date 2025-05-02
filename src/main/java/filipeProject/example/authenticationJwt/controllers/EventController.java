@@ -1,7 +1,10 @@
 package filipeProject.example.authenticationJwt.controllers;
 
 import filipeProject.example.authenticationJwt.dto.eventDTOs.EventDTO;
+import filipeProject.example.authenticationJwt.dto.eventDTOs.EventSummaryDTO;
 import filipeProject.example.authenticationJwt.service.EventService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,4 +31,18 @@ public class EventController {
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<EventDTO> getEventById(@PathVariable Long id){
+        var event = service.getEventById(id);
+        return ResponseEntity.ok(event);
+    }
+
+    @GetMapping(value = "/list")
+    public ResponseEntity<Page<EventSummaryDTO>> getAllEvents(Pageable pageable){
+        var allEvents = service.getAllEvents(pageable);
+        return ResponseEntity.ok(allEvents);
+    }
+
+
 }
