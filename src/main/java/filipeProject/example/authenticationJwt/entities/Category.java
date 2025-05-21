@@ -24,7 +24,7 @@ public class Category {
 
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
+    @OneToMany(mappedBy = "category")
     private Set<Talk> talks = new HashSet<>();
 
 }

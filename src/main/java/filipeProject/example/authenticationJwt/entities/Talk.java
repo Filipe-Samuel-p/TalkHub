@@ -52,10 +52,21 @@ public class Talk {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    @ManyToMany
-    @JoinTable(name = "tb_talk_category",
-    joinColumns = @JoinColumn(name = "talk_id"),
-    inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Talk(TalkRequest talkRequest){
+
+            title = talkRequest.getTitle();
+            description = talkRequest.getDescription();
+            startTime = talkRequest.getStartTime();
+            duration = talkRequest.getDuration();
+            totalCapacity = talkRequest.getTotalCapacity();
+            numberAvailable = talkRequest.getNumberAvailable();
+            local = talkRequest.getLocal();
+            difficultyLevel = talkRequest.getDifficultyLevel();
+
+    }
 
 }

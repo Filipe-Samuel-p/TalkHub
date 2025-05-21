@@ -3,7 +3,7 @@ package filipeProject.example.authenticationJwt.dto.speakerDTOs;
 
 import filipeProject.example.authenticationJwt.entities.SpeakerRequest;
 import filipeProject.example.authenticationJwt.entities.User;
-import filipeProject.example.authenticationJwt.enums.SpeakerRequestStatus;
+import filipeProject.example.authenticationJwt.enums.RequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ public class SpeakerRequestDTO {
     private UUID id;
     private UserDTO user;
     private Instant requestDate;
-    private SpeakerRequestStatus status;
+    private RequestStatus status;
 
 
     public SpeakerRequestDTO(SpeakerRequest request){

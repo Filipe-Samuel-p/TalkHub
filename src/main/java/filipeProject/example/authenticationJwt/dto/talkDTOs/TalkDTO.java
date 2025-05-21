@@ -1,5 +1,7 @@
 package filipeProject.example.authenticationJwt.dto.talkDTOs;
 
+import filipeProject.example.authenticationJwt.dto.speakerDTOs.SpeakerDTO;
+import filipeProject.example.authenticationJwt.entities.Speaker;
 import filipeProject.example.authenticationJwt.entities.Talk;
 import filipeProject.example.authenticationJwt.enums.DifficultyTalkLevel;
 import lombok.AllArgsConstructor;
@@ -23,6 +25,7 @@ public class TalkDTO {
     private int numberAvailable;
     private String local;
     private DifficultyTalkLevel difficultyLevel;
+    private SpeakerDTO speaker;
 
     public TalkDTO(Talk entity){
       id = entity.getId();
@@ -34,6 +37,7 @@ public class TalkDTO {
       numberAvailable = entity.getNumberAvailable();
       local = entity.getLocal();
       difficultyLevel = entity.getDifficultyLevel();
+      speaker = new SpeakerDTO(entity.getSpeaker());
     }
 
 }

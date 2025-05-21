@@ -1,7 +1,7 @@
 package filipeProject.example.authenticationJwt.entities;
 
 
-import filipeProject.example.authenticationJwt.enums.SpeakerRequestStatus;
+import filipeProject.example.authenticationJwt.enums.RequestStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +29,6 @@ public class SpeakerRequest {
     private Instant requestDate;
 
     @Enumerated(EnumType.STRING)
-    private SpeakerRequestStatus status;
+    private RequestStatus status;
 
 }

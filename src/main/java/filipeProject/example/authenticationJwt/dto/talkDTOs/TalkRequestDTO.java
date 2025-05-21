@@ -1,8 +1,8 @@
 package filipeProject.example.authenticationJwt.dto.talkDTOs;
 
-import filipeProject.example.authenticationJwt.entities.Category;
-import filipeProject.example.authenticationJwt.entities.Talk;
+import filipeProject.example.authenticationJwt.entities.TalkRequest;
 import filipeProject.example.authenticationJwt.enums.DifficultyTalkLevel;
+import filipeProject.example.authenticationJwt.enums.RequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.UUID;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class TalkRequestDDTO {
+public class TalkRequestDTO {
 
     private Long id;
     private String title;
@@ -26,12 +27,13 @@ public class TalkRequestDDTO {
     private int numberAvailable;
     private String local;
     private DifficultyTalkLevel difficultyLevel;
+    private UUID speakerId;
     private Long eventId;
-    private Set<Long> categoryIds;
+    private Long categoryId;
+    private RequestStatus status;
 
 
-
-    public TalkRequestDDTO(Talk entity){
+    public TalkRequestDTO(TalkRequest entity){
         id = entity.getId();
         title = entity.getTitle();
         description = entity.getDescription();
@@ -41,10 +43,10 @@ public class TalkRequestDDTO {
         numberAvailable = entity.getNumberAvailable();
         local = entity.getLocal();
         difficultyLevel = entity.getDifficultyLevel();
-        eventId = entity.getEvent().getId();
-        categoryIds = entity.getCategories().stream()
-                .map(Category::getId)
-                .collect(Collectors.toSet());
+        speakerId = entity.getSpeakerId();
+        eventId = entity.getEventId();
+        categoryId = entity.getCategoryId();
+        status = entity.getStatus();
 
     }
 }

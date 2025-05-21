@@ -15,13 +15,14 @@ VALUES ('c4e98d25-61a3-47bf-85f1-4d7b9c632a8e','Rafael Costa',
 
 
 INSERT INTO tb_speaker( user_id,resume,specialties,institution) VALUES (   '957e87ba-27df-46a1-aa03-96622cc0ba50','la ola','backend','UENF');
+INSERT INTO tb_speaker( user_id,resume,specialties,institution) VALUES (   'b8c12a93-45f7-42d8-9e3b-67a2c5d84e19','Sou design','UX/UI','Globo');
 
 INSERT INTO tb_role(role_id,authority) VALUES (1,'ROLE_ADMIN');
 INSERT INTO tb_role(role_id,authority) VALUES (2,'ROLE_USER');
 INSERT INTO tb_role(role_id,authority) VALUES (3,'ROLE_SPEAKER');
 
 INSERT INTO tb_user_role(role_id, user_id) VALUES (1,'957e87ba-27df-46a1-aa03-96622cc0ba50');
-INSERT INTO tb_user_role(role_id, user_id) VALUES (2,'b8c12a93-45f7-42d8-9e3b-67a2c5d84e19');
+INSERT INTO tb_user_role(role_id, user_id) VALUES (3,'b8c12a93-45f7-42d8-9e3b-67a2c5d84e19');
 INSERT INTO tb_user_role(role_id, user_id) VALUES (2,'c4e98d25-61a3-47bf-85f1-4d7b9c632a8e');
 
 INSERT INTO tb_user_following(user_id,following_id) VALUES ('b8c12a93-45f7-42d8-9e3b-67a2c5d84e19','c4e98d25-61a3-47bf-85f1-4d7b9c632a8e');
@@ -37,27 +38,24 @@ INSERT INTO tb_category(name) VALUES ('Inteligência Artificial'),
                                      ('Matemática'),
                                      ('Mercado de TI');
 
-INSERT INTO tb_talk ( title, description, start_time, duration, total_capacity, number_available, local, difficulty_level )
+INSERT INTO tb_talk ( title, description, start_time, duration, total_capacity, number_available, local, difficulty_level,speaker_id)
 VALUES (
            'Introdução ao Spring Boot',
            'Uma palestra voltada para desenvolvedores iniciantes que desejam aprender como criar aplicações web com o framework Spring Boot.',
            '2025-05-10T09:00:00Z',
            120, -- 2 horas em minutos
-           100, 100, 'Auditório A', 'BASIC'
+           100, 100, 'Auditório A', 'BASIC','b8c12a93-45f7-42d8-9e3b-67a2c5d84e19'
        );
 
-INSERT INTO tb_talk ( title, description, start_time, duration, total_capacity, number_available, local, difficulty_level )
+INSERT INTO tb_talk ( title, description, start_time, duration, total_capacity, number_available, local, difficulty_level,category_id )
 VALUES (
            'Java para Profissionais',
            'Uma palestra voltada para desenvolvedores iniciantes que desejam aprender como criar aplicações web com o framework Spring Boot.',
            '2025-05-10T09:00:00Z',
            120, -- 2 horas em minutos
-           100, 100, 'Auditório A', 'BASIC'
+           100, 100, 'Auditório A', 'BASIC',1
        );
 
-
-INSERT INTO tb_talk_category(talk_id, category_id) VALUES ('1', '4');
-INSERT INTO tb_talk_category(talk_id, category_id) VALUES ('2', '4');
 
 INSERT INTO tb_event (name, description, start_Date, end_Date, place) VALUES
     ('Congresso de Tecnologia 2025', 'Evento voltado para inovações tecnológicas e tendências em TI.', '2025-06-15T09:00:00Z', '2025-06-15T18:00:00Z', 'Centro de Convenções, São Paulo');

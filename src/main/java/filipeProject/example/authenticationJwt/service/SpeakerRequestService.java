@@ -4,7 +4,7 @@ import filipeProject.example.authenticationJwt.dto.speakerDTOs.SpeakerRequestDTO
 import filipeProject.example.authenticationJwt.entities.Speaker;
 import filipeProject.example.authenticationJwt.entities.SpeakerRequest;
 import filipeProject.example.authenticationJwt.enums.RoleName;
-import filipeProject.example.authenticationJwt.enums.SpeakerRequestStatus;
+import filipeProject.example.authenticationJwt.enums.RequestStatus;
 import filipeProject.example.authenticationJwt.exceptions.ConflictException;
 import filipeProject.example.authenticationJwt.exceptions.ResourceNotFoundException;
 import filipeProject.example.authenticationJwt.repositories.RoleRepository;
@@ -51,7 +51,7 @@ public class SpeakerRequestService {
 
         var newRequest = new SpeakerRequest();
         newRequest.setUser(user);
-        newRequest.setStatus(SpeakerRequestStatus.PENDING);
+        newRequest.setStatus(RequestStatus.PENDING);
         newRequest.setRequestDate(Instant.now());
 
         repository.save(newRequest);
@@ -74,7 +74,7 @@ public class SpeakerRequestService {
 
         var user = request.getUser();
         var isRoleSpeaker = user.getRoles().contains(roleSpeaker);
-        var isApproved = request.getStatus().equals(SpeakerRequestStatus.APPROVED);
+        var isApproved = request.getStatus().equals(RequestStatus.APPROVED);
 
         if(isApproved || isRoleSpeaker){
             throw new ConflictException("Esta requisição já foi aprovada ou o usuário ja é um palestrante");
@@ -83,7 +83,7 @@ public class SpeakerRequestService {
         var newSpeaker = new Speaker();
         newSpeaker.setUser(user);
 
-        request.setStatus(SpeakerRequestStatus.APPROVED);
+        request.setStatus(RequestStatus.APPROVED);
 
         user.getRoles().add(roleSpeaker);
 
@@ -103,13 +103,13 @@ public class SpeakerRequestService {
 
         var user = request.getUser();
         var isRoleSpeaker = user.getRoles().contains(roleSpeaker);
-        var isApproved = request.getStatus().equals(SpeakerRequestStatus.DENIED);
+        var isApproved = request.getStatus().equals(RequestStatus.DENIED);
 
         if(isApproved || isRoleSpeaker){
             throw new ConflictException("Esta requisição já foi NEGADA ou o usuário ja é um palestrante");
         }
 
-        request.setStatus(SpeakerRequestStatus.DENIED);
+        request.setStatus(RequestStatus.DENIED);
 
         repository.save(request);
     }

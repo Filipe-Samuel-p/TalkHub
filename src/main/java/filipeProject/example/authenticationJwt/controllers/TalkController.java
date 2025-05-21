@@ -1,14 +1,15 @@
 package filipeProject.example.authenticationJwt.controllers;
 
+import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkDTO;
+import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkRequestDTO;
 import filipeProject.example.authenticationJwt.service.TalkService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/talks")
+@RequestMapping(value = "/talk")
 public class TalkController {
 
     private final TalkService service;
@@ -17,4 +18,9 @@ public class TalkController {
         this.service = service;
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<TalkDTO> getTalk(@PathVariable Long id){
+        var dto = service.getTalk(id);
+        return ResponseEntity.ok(dto);
+    }
 }

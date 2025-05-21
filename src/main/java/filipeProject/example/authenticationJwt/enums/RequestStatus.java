@@ -1,6 +1,6 @@
 package filipeProject.example.authenticationJwt.enums;
 
-public enum SpeakerRequestStatus {
+public enum RequestStatus {
     APPROVED,
     PENDING,
     DENIED

@@ -50,6 +50,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/category/list").permitAll()
                         .requestMatchers(HttpMethod.GET, "/category/{id}/talks").permitAll()
                         .requestMatchers(HttpMethod.GET, "/event/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/talk/{id}").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())

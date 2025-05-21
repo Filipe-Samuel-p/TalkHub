@@ -1,5 +1,6 @@
 package filipeProject.example.authenticationJwt.dto.eventDTOs;
 
+import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkDTO;
 import filipeProject.example.authenticationJwt.entities.Event;
 import filipeProject.example.authenticationJwt.entities.Talk;
 import jakarta.persistence.*;
@@ -22,7 +23,7 @@ public class EventDTO {
     private Instant startDate;
     private Instant endDate;
     private String place;
-    private List<Talk> talks = new ArrayList<>();
+    private List<TalkDTO> talks = new ArrayList<>();
 
     public EventDTO(Event entity){
         id = entity.getId();
@@ -31,6 +32,9 @@ public class EventDTO {
         startDate = entity.getStartDate();
         endDate = entity.getEndDate();
         place = entity.getPlace();
+
+       talks = entity.getTalks().stream()
+                .map(TalkDTO::new).toList();
     }
 
 }
