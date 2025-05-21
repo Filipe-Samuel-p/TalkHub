@@ -19,8 +19,16 @@ public class TalkController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<TalkDTO> getTalk(@PathVariable Long id){
+    public ResponseEntity<TalkDTO> getTalk(@PathVariable Long id) {
         var dto = service.getTalk(id);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping(value = "/{id}")
+    @PreAuthorize("hasRole('SPEAKER') or hasRole('ADMIN')")
+    public ResponseEntity<TalkDTO> updateTalk(@PathVariable Long id,
+                                              @RequestBody TalkDTO talkDTO,JwtAuthenticationToken token){
+        var dto = service.updateTalk(id,talkDTO,token);
         return ResponseEntity.ok(dto);
     }
 }

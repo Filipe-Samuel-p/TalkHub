@@ -80,7 +80,7 @@ public class UserController {
         return ResponseEntity.ok(profile);
     }
 
-    @PutMapping(value = "/me")
+    @PatchMapping(value = "/me")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<UpdateUserDTO> updateUser (@RequestBody UpdateUserDTO dto, JwtAuthenticationToken token){
         var user = service.updateUser(dto,token);
