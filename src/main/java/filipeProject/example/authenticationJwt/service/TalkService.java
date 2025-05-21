@@ -5,6 +5,7 @@ import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkRequestDTO;
 import filipeProject.example.authenticationJwt.enums.RoleName;
 import filipeProject.example.authenticationJwt.exceptions.AccessDeniedException;
 import filipeProject.example.authenticationJwt.exceptions.ConflictException;
+import filipeProject.example.authenticationJwt.exceptions.DataIntegrityViolationException;
 import filipeProject.example.authenticationJwt.exceptions.ResourceNotFoundException;
 import filipeProject.example.authenticationJwt.repositories.*;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -87,5 +88,37 @@ public class TalkService {
 
         return new TalkDTO(talkEntity);
 
+    }
+
+    public void deleteTalk(Long talkId, JwtAuthenticationToken token){
+
+        var roles = token.getAuthorities()
+                .stream()
+                .map(Object::toString)
+                .toList();
+
+        UUID loggedUserId = UUID.fromString(token.getName());
+
+        var talkEntity = repository.findById(talkId)
+                .orElseThrow(()-> new ResourceNotFoundException("Palestra não encontrada"));
+
+        var isAdmin = roles.contains("ROLE_ADMIN");
+        var isTheOfficialSpeaker = talkEntity.getSpeaker().getUserId().equals(loggedUserId);
+
+        if (!isAdmin && !isTheOfficialSpeaker) {
+            throw new AccessDeniedException("O usuário não tem permissão para atualizar esta palestra");
+        }
+
+        try {
+            repository.deleteById(talkId);
+            // A deleção funciona mesmo com entidades associadas porque os campos relacionados
+            // (event, speaker, category) são representados como chaves estrangeiras (foreign keys)
+            // que permitem valores nulos (nullable) no banco de dados.
+            // Isso significa que o banco aceita que a Talk seja deletada sem exigir a exclusão das entidades relacionadas.
+            // A JPA também não está configurada para deletar em cascata (sem CascadeType.REMOVE).
+
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException("Falha de integridade referencial");
+        }
     }
 }

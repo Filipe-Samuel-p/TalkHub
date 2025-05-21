@@ -31,4 +31,14 @@ public class TalkController {
         var dto = service.updateTalk(id,talkDTO,token);
         return ResponseEntity.ok(dto);
     }
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('SPEAKER') or hasRole('ADMIN')")
+    public ResponseEntity<Void> updateTalk(@PathVariable Long id,
+                                              JwtAuthenticationToken token){
+        service.deleteTalk(id,token);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }
