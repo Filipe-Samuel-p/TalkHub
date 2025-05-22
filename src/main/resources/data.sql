@@ -23,6 +23,7 @@ INSERT INTO tb_role(role_id,authority) VALUES (3,'ROLE_SPEAKER');
 
 INSERT INTO tb_user_role(role_id, user_id) VALUES (1,'957e87ba-27df-46a1-aa03-96622cc0ba50');
 INSERT INTO tb_user_role(role_id, user_id) VALUES (3,'b8c12a93-45f7-42d8-9e3b-67a2c5d84e19');
+INSERT INTO tb_user_role(role_id, user_id) VALUES (2,'b8c12a93-45f7-42d8-9e3b-67a2c5d84e19');
 INSERT INTO tb_user_role(role_id, user_id) VALUES (2,'c4e98d25-61a3-47bf-85f1-4d7b9c632a8e');
 
 INSERT INTO tb_user_following(user_id,following_id) VALUES ('b8c12a93-45f7-42d8-9e3b-67a2c5d84e19','c4e98d25-61a3-47bf-85f1-4d7b9c632a8e');

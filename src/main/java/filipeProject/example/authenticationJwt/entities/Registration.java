@@ -9,16 +9,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.util.List;
 
 
 @Entity
-@Table(name = "tb_registrations")
+@Table(name = "tb_registration")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Registrations {
+public class Registration {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +28,6 @@ public class Registrations {
     @Enumerated(EnumType.STRING)
     private Payment paymentStatus;
 
-    private Boolean isConfirmed;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
