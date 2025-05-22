@@ -9,9 +9,7 @@ import lombok.Setter;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
@@ -42,7 +40,7 @@ public class Talk {
     private DifficultyTalkLevel difficultyLevel;
 
     @OneToMany(mappedBy = "talk")
-    private List<Registrations> registrations;
+    private List<Registration> registrations;
 
     @ManyToOne
     @JoinColumn(name = "speaker_id")

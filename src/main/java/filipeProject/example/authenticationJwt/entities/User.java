@@ -58,7 +58,7 @@ public class User {
     private List<User> followers = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Registrations> registrations = new ArrayList<>();
+    private List<Registration> registrations = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "tb_user_role",

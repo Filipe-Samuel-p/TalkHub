@@ -1,8 +1,9 @@
 package filipeProject.example.authenticationJwt.service;
 
+import filipeProject.example.authenticationJwt.dto.registrationDTOs.RegistrationDTO;
 import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkDTO;
-import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkRequestDTO;
-import filipeProject.example.authenticationJwt.enums.RoleName;
+import filipeProject.example.authenticationJwt.entities.Registration;
+import filipeProject.example.authenticationJwt.enums.Payment;
 import filipeProject.example.authenticationJwt.exceptions.AccessDeniedException;
 import filipeProject.example.authenticationJwt.exceptions.ConflictException;
 import filipeProject.example.authenticationJwt.exceptions.DataIntegrityViolationException;
@@ -11,6 +12,9 @@ import filipeProject.example.authenticationJwt.repositories.*;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,10 +22,12 @@ public class TalkService {
 
     private final TalkRepository repository;
     private final UserRepository userRepository;
+    private final RegistrationRepository registrationRepository;
 
-    public TalkService(TalkRepository repository, UserRepository userRepository) {
+    public TalkService(TalkRepository repository, UserRepository userRepository, RegistrationRepository registrationRepository) {
         this.repository = repository;
         this.userRepository = userRepository;
+        this.registrationRepository = registrationRepository;
     }
 
     public TalkDTO getTalk(Long talkId){
@@ -121,4 +127,27 @@ public class TalkService {
             throw new ConflictException("Falha de integridade referencial");
         }
     }
+
+
+    public RegistrationDTO newRegistration(Long talkId, JwtAuthenticationToken token){
+
+        var talk = repository.findById(talkId)
+                .orElseThrow(()-> new ResourceNotFoundException("Palestra não encontrada"));
+
+        var loggedInUser = userRepository.findById(UUID.fromString(token.getName()))
+                .orElseThrow(()-> new ResourceNotFoundException("Usuário logado não encontrado"));
+
+        var newRegistration = new Registration();
+
+        newRegistration.setRegistrationDate(Instant.now());
+        newRegistration.setPaymentStatus(Payment.PENDING);
+        newRegistration.setUser(loggedInUser);
+        newRegistration.setTalk(talk);
+        registrationRepository.save(newRegistration);
+
+        return new RegistrationDTO(newRegistration);
+
+
+    }
+
 }

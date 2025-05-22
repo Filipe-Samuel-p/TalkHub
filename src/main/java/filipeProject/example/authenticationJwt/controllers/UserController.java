@@ -1,5 +1,6 @@
 package filipeProject.example.authenticationJwt.controllers;
 
+import filipeProject.example.authenticationJwt.dto.registrationDTOs.RegistrationDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.FollowerAndFollowingDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.UpdateUserDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.UserProfileDTO;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -107,6 +109,13 @@ public class UserController {
     public ResponseEntity<Page<FollowerAndFollowingDTO>> getMyFollowing(JwtAuthenticationToken token, Pageable pageable) {
         var page = service.getLoggedUserFollowing(token, pageable);
         return ResponseEntity.ok(page);
+    }
+
+    @GetMapping(value = "/{id}/registrations")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<RegistrationDTO>> getAllRegistrationUser(@PathVariable UUID id){
+        var all = service.getAllRegistration(id);
+        return ResponseEntity.ok(all);
     }
 
 }

@@ -1,5 +1,6 @@
 package filipeProject.example.authenticationJwt.controllers;
 
+import filipeProject.example.authenticationJwt.dto.registrationDTOs.RegistrationDTO;
 import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkDTO;
 import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkRequestDTO;
 import filipeProject.example.authenticationJwt.service.TalkService;
@@ -7,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/talk")
@@ -40,5 +44,13 @@ public class TalkController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping(value = "/{id}/register")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<RegistrationDTO> newRegistration(@PathVariable Long id,JwtAuthenticationToken token){
+        var dto = service.newRegistration(id,token);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
+    }
 
 }

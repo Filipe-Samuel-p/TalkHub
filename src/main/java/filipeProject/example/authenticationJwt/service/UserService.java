@@ -1,5 +1,6 @@
 package filipeProject.example.authenticationJwt.service;
 
+import filipeProject.example.authenticationJwt.dto.registrationDTOs.RegistrationDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.FollowerAndFollowingDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.UpdateUserDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.UserProfileDTO;
@@ -24,7 +25,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+import java.util.stream.Collectors;
 
 
 @Service
@@ -184,6 +185,16 @@ public class UserService {
                 .toList();
 
         return new PageImpl<>(followerDTOs, pageable, followers.size());
+    }
+
+    public List<RegistrationDTO> getAllRegistration(UUID userId){
+
+        var user = repository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        return user.getRegistrations().stream()
+                .map(RegistrationDTO::new).collect(Collectors.toList());
+
     }
 
 
