@@ -1,5 +1,6 @@
 package filipeProject.example.authenticationJwt.controllers;
 
+import filipeProject.example.authenticationJwt.dto.postDTOs.PostWithoutUserDTO;
 import filipeProject.example.authenticationJwt.dto.registrationDTOs.RegistrationDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.FollowerAndFollowingDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.UpdateUserDTO;
@@ -117,5 +118,13 @@ public class UserController {
         var all = service.getAllRegistration(id);
         return ResponseEntity.ok(all);
     }
+
+    @GetMapping(value = "/{id}/posts")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<PostWithoutUserDTO>> getAllPosts(@PathVariable UUID id){
+        var allPosts = service.getAllPost(id);
+        return ResponseEntity.ok(allPosts);
+    }
+
 
 }

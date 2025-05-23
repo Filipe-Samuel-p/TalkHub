@@ -1,5 +1,6 @@
 package filipeProject.example.authenticationJwt.service;
 
+import filipeProject.example.authenticationJwt.dto.postDTOs.PostWithoutUserDTO;
 import filipeProject.example.authenticationJwt.dto.registrationDTOs.RegistrationDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.FollowerAndFollowingDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.UpdateUserDTO;
@@ -196,6 +197,15 @@ public class UserService {
         return user.getRegistrations().stream()
                 .map(RegistrationDTO::new).collect(Collectors.toList());
 
+    }
+
+    public List<PostWithoutUserDTO> getAllPost(UUID userId){
+
+        var user = repository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        return user.getPosts().stream()
+                .map(PostWithoutUserDTO::new).collect(Collectors.toList());
     }
 
 

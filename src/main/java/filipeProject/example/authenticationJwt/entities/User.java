@@ -66,6 +66,9 @@ public class User {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
+
     public Boolean isLoginCorrect(LoginRequestDTO loginRequestDTO, PasswordEncoder password){
         return password.matches(loginRequestDTO.password(),this.password);
     }
