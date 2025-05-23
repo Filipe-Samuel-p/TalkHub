@@ -5,6 +5,7 @@ import filipeProject.example.authenticationJwt.dto.userDTOs.FollowerAndFollowing
 import filipeProject.example.authenticationJwt.dto.userDTOs.UpdateUserDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.UserProfileDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.UserRegisterDTO;
+import filipeProject.example.authenticationJwt.entities.Registration;
 import filipeProject.example.authenticationJwt.entities.User;
 import filipeProject.example.authenticationJwt.enums.RoleName;
 import filipeProject.example.authenticationJwt.exceptions.AccessDeniedException;

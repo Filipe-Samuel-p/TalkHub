@@ -131,11 +131,19 @@ public class TalkService {
 
     public RegistrationDTO newRegistration(Long talkId, JwtAuthenticationToken token){
 
+        var loggedInUserId = UUID.fromString(token.getName());
+
         var talk = repository.findById(talkId)
                 .orElseThrow(()-> new ResourceNotFoundException("Palestra não encontrada"));
 
-        var loggedInUser = userRepository.findById(UUID.fromString(token.getName()))
+        var loggedInUser = userRepository.findById(loggedInUserId)
                 .orElseThrow(()-> new ResourceNotFoundException("Usuário logado não encontrado"));
+
+        var isTheSpeaker = talk.getSpeaker().getUserId().equals(loggedInUserId);
+
+        if(isTheSpeaker){
+            throw new ConflictException("O usuário logado é o responsável pela palestra");
+        }
 
         var allUserRegistrations = loggedInUser.getRegistrations();
         for (Registration registration:allUserRegistrations){
