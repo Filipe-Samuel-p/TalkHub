@@ -137,6 +137,13 @@ public class TalkService {
         var loggedInUser = userRepository.findById(UUID.fromString(token.getName()))
                 .orElseThrow(()-> new ResourceNotFoundException("Usuário logado não encontrado"));
 
+        var allUserRegistrations = loggedInUser.getRegistrations();
+        for (Registration registration:allUserRegistrations){
+            if(registration.getTalk().equals(talk)){
+                throw new ConflictException("O usuário logado ja fez a inscrição para esta palestra");
+            }
+        }
+
         var newRegistration = new Registration();
 
         newRegistration.setRegistrationDate(Instant.now());
@@ -146,7 +153,6 @@ public class TalkService {
         registrationRepository.save(newRegistration);
 
         return new RegistrationDTO(newRegistration);
-
 
     }
 
