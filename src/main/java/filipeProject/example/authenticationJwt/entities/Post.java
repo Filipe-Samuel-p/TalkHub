@@ -24,5 +24,8 @@ public class Post {
     private String text;
     private Instant creationDate;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
