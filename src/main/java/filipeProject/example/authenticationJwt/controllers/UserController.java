@@ -1,5 +1,6 @@
 package filipeProject.example.authenticationJwt.controllers;
 
+import com.nimbusds.jwt.JWT;
 import filipeProject.example.authenticationJwt.dto.postDTOs.PostWithoutUserDTO;
 import filipeProject.example.authenticationJwt.dto.registrationDTOs.RegistrationDTO;
 import filipeProject.example.authenticationJwt.dto.userDTOs.FollowerAndFollowingDTO;
@@ -124,6 +125,13 @@ public class UserController {
     public ResponseEntity<List<PostWithoutUserDTO>> getAllPosts(@PathVariable UUID id){
         var allPosts = service.getAllPost(id);
         return ResponseEntity.ok(allPosts);
+    }
+
+    @DeleteMapping(value = "/me/posts/{postId}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<Void> deletePost(@PathVariable Long postId, JwtAuthenticationToken token){
+        service.deletePost(postId,token);
+        return ResponseEntity.noContent().build();
     }
 
 

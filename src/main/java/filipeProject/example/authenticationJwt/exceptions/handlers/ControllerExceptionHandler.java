@@ -37,6 +37,15 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(httpStatus).body(customError);
     }
 
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<CustomErrorDTO> forbiddenException(ForbiddenException exception, HttpServletRequest request){
+        var httpStatus = HttpStatus.FORBIDDEN;
+        var customError = new CustomErrorDTO(Instant.now(),httpStatus.value(),
+                exception.getMessage(),request.getRequestURI());
+        return ResponseEntity.status(httpStatus).body(customError);
+    }
+
+
 
 
 }

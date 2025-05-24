@@ -9,10 +9,8 @@ import filipeProject.example.authenticationJwt.dto.userDTOs.UserRegisterDTO;
 import filipeProject.example.authenticationJwt.entities.Registration;
 import filipeProject.example.authenticationJwt.entities.User;
 import filipeProject.example.authenticationJwt.enums.RoleName;
-import filipeProject.example.authenticationJwt.exceptions.AccessDeniedException;
-import filipeProject.example.authenticationJwt.exceptions.ConflictException;
-import filipeProject.example.authenticationJwt.exceptions.DataIntegrityViolationException;
-import filipeProject.example.authenticationJwt.exceptions.ResourceNotFoundException;
+import filipeProject.example.authenticationJwt.exceptions.*;
+import filipeProject.example.authenticationJwt.repositories.PostRepository;
 import filipeProject.example.authenticationJwt.repositories.RoleRepository;
 import filipeProject.example.authenticationJwt.repositories.UserRepository;
 import org.springframework.data.domain.Page;
@@ -36,11 +34,13 @@ public class UserService {
     private final UserRepository repository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RoleRepository roleRepository;
+    private final PostRepository postRepository;
 
-    public UserService(UserRepository repository, BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository) {
+    public UserService(UserRepository repository, BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository, PostRepository postRepository) {
         this.repository = repository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.roleRepository = roleRepository;
+        this.postRepository = postRepository;
     }
 
     public UserRegisterDTO newUser(UserRegisterDTO dto){
@@ -206,6 +206,37 @@ public class UserService {
 
         return user.getPosts().stream()
                 .map(PostWithoutUserDTO::new).collect(Collectors.toList());
+    }
+
+    public void deletePost(Long postId, JwtAuthenticationToken token){
+
+        var userId = UUID.fromString(token.getName());
+        var user = repository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        var post = postRepository.findById(postId)
+                .orElseThrow(()-> new ResourceNotFoundException("Post não encontrado"));
+
+
+        var roles = token.getAuthorities()
+                .stream()
+                .map(Object::toString)
+                .toList();
+
+        var isAdmin = roles.contains("ROLE_ADMIN");
+        var isPostOwner = post.getUser().getId().equals(userId);
+
+        if(!isAdmin && !isPostOwner){
+            throw new ForbiddenException("Voce não tem permissão para excluir este post");
+        }
+
+        try{
+            postRepository.deleteById(postId);
+        }
+        catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("Falha de integridade referencial");
+        }
+
     }
 
 
