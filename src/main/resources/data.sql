@@ -1,12 +1,13 @@
+
 INSERT INTO tb_user(id,name, email, password, cpf, creation_Date,biography,img_Url,img_Background,num_following,num_followers)
 VALUES ('957e87ba-27df-46a1-aa03-96622cc0ba50','Filipe Samuel',
         'felipepires.p125@gmail.com', '$2a$10$YjNEj18ApFMUmdjAIzw0KuxRiSxpVKxvhTrY8P7vTC8pd63P8qiGS',
-        '18864561781', CURRENT_TIMESTAMP,'sou Dev','jahashas','hahsshhsa',0,0);
+        '18864561781', CURRENT_TIMESTAMP,'sou Dev','img_filipe','ibg_filipe',0,0);
 
 INSERT INTO tb_user(id,name, email, password, cpf, creation_Date,biography,img_Url,img_Background,num_following,num_followers)
 VALUES ('b8c12a93-45f7-42d8-9e3b-67a2c5d84e19','Marina Alves',
         'marina.alves@gmail.com', '$2a$10$YjNEj18ApFMUmdjAIzw0KuxRiSxpVKxvhTrY8P7vTC8pd63P8qiGS',
-        '29376154890', CURRENT_TIMESTAMP,'Designer UX/UI','img_marina','bg_marina',0,0);
+        '29376154890', CURRENT_TIMESTAMP,'Designer UX/UI','img_marina','bg_marina',1,0);
 
 INSERT INTO tb_user(id, name, email, password, cpf, creation_Date, biography, img_Url, img_Background, num_following, num_followers)
 VALUES ('d4e91f12-7c3f-4d88-bc2a-73a6a9cbf0c2', 'Lucas Pereira',
@@ -17,10 +18,9 @@ VALUES ('d4e91f12-7c3f-4d88-bc2a-73a6a9cbf0c2', 'Lucas Pereira',
 INSERT INTO tb_user(id,name, email, password, cpf, creation_Date,biography,img_Url,img_Background,num_following,num_followers)
 VALUES ('c4e98d25-61a3-47bf-85f1-4d7b9c632a8e','Rafael Costa',
         'rafael.costa@outlook.com', '$2a$10$YjNEj18ApFMUmdjAIzw0KuxRiSxpVKxvhTrY8P7vTC8pd63P8qiGS',
-        '37689512340', CURRENT_TIMESTAMP,'Engenheiro de Software | Backend','img_rafael','bg_rafael',0,0);
+        '37689512340', CURRENT_TIMESTAMP,'Engenheiro de Software | Backend','img_rafael','bg_rafael',0,1);
 
 
-INSERT INTO tb_speaker( user_id,resume,specialties,institution) VALUES (   '957e87ba-27df-46a1-aa03-96622cc0ba50','la ola','backend','UENF');
 INSERT INTO tb_speaker( user_id,resume,specialties,institution) VALUES (   'b8c12a93-45f7-42d8-9e3b-67a2c5d84e19','Sou design','UX/UI','Globo');
 INSERT INTO tb_speaker( user_id,resume,specialties,institution) VALUES (   'd4e91f12-7c3f-4d88-bc2a-73a6a9cbf0c2','Sou Full Stack','Java e Angular','Itaú');
 
@@ -62,7 +62,7 @@ VALUES (
            'Java para Profissionais',
            'Uma palestra voltada para desenvolvedores iniciantes que desejam aprender como criar aplicações web com o framework Spring Boot.',
            '2025-05-10T09:00:00Z',
-           120, -- 2 horas em minutos
+           120,
            100, 100, 'Auditório A', 'BASIC',1,'d4e91f12-7c3f-4d88-bc2a-73a6a9cbf0c2'
        );
 
@@ -72,3 +72,5 @@ INSERT INTO tb_event (name, description, start_Date, end_Date, place) VALUES
 
 INSERT INTO tb_event(name, description, start_Date, end_Date, place) VALUES
     ('Feira de Ciências Universitária', 'Apresentação de projetos científicos e experimentos de alunos.', '2025-09-10T10:00:00Z', '2025-09-10T16:00:00Z', 'Campus Principal, Auditório 2');
+
+---
