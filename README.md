@@ -37,7 +37,7 @@ Esta documentação descreve todos os endpoints disponíveis na API, organizados
 - [✍️ Inscrições em Palestras](#️-inscrições-em-palestras)
 - [📱 Posts e Feed](#-posts-e-feed)
 
----
+
 
 ## 👤 Usuários
 
@@ -73,7 +73,7 @@ Esta documentação descreve todos os endpoints disponíveis na API, organizados
 
 </details>
 
----
+
 
 ## 🎙️ Solicitação de Permissão para Palestrante
 
@@ -100,7 +100,7 @@ Esta documentação descreve todos os endpoints disponíveis na API, organizados
 
 </details>
 
----
+
 
 ## 📝 Solicitações de Palestras
 
@@ -125,7 +125,7 @@ Esta documentação descreve todos os endpoints disponíveis na API, organizados
 
 </details>
 
----
+
 
 ## 🎤 Palestras
 
@@ -142,7 +142,7 @@ Esta documentação descreve todos os endpoints disponíveis na API, organizados
 
 </details>
 
----
+
 
 ## 🏷️ Categorias
 
@@ -160,7 +160,7 @@ Esta documentação descreve todos os endpoints disponíveis na API, organizados
 
 </details>
 
----
+
 
 ## 📅 Eventos
 
@@ -177,7 +177,7 @@ Esta documentação descreve todos os endpoints disponíveis na API, organizados
 
 </details>
 
----
+
 
 ## ✍️ Inscrições em Palestras
 
@@ -203,7 +203,7 @@ Esta documentação descreve todos os endpoints disponíveis na API, organizados
 
 </details>
 
----
+
 
 ## 📱 Posts e Feed
 
@@ -225,7 +225,6 @@ Esta documentação descreve todos os endpoints disponíveis na API, organizados
 
 </details>
 
----
 
 ## 🔐 Níveis de Permissão
 
@@ -235,7 +234,6 @@ Esta documentação descreve todos os endpoints disponíveis na API, organizados
 - **ROLE_ADMIN**: Administrador do sistema
 - **Próprio usuário**: Ações que só podem ser realizadas pelo dono do recurso
 
----
 
 
 ## Modelagem das entidades
