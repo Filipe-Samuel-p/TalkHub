@@ -49,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/category/list").permitAll()
                         .requestMatchers(HttpMethod.GET, "/category/{id}/talks").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.GET, "/event/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/talk/{id}").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
