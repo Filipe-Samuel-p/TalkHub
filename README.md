@@ -19,6 +19,7 @@ Este projeto foi desenvolvido como uma iniciativa pessoal para aprofundar conhec
 - Spring Data JPA (Hibernate)
 - PostgreSQL
 - Docker + Docker Compose
+- (Em breve: Serviço de recomendação)
 - (Em breve: Integração com Google Calendar API e sistema de certificados)
 - (Em breve: utilização da amazon S3)
 
