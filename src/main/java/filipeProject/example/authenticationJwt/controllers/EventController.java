@@ -2,11 +2,14 @@ package filipeProject.example.authenticationJwt.controllers;
 
 import filipeProject.example.authenticationJwt.dto.eventDTOs.EventDTO;
 import filipeProject.example.authenticationJwt.dto.eventDTOs.EventSummaryDTO;
+import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkCreationDTO;
+import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkDTO;
 import filipeProject.example.authenticationJwt.service.EventService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -43,6 +46,16 @@ public class EventController {
         var allEvents = service.getAllEvents(pageable);
         return ResponseEntity.ok(allEvents);
     }
+
+    @PostMapping("{eventId}/create-talk")
+    @PreAuthorize("hasRole('SPEAKER')")
+    public ResponseEntity<TalkCreationDTO> createNewTalk(@RequestBody TalkCreationDTO dto,@PathVariable Long eventId, JwtAuthenticationToken token){
+        dto = service.newTalk(dto,token,eventId);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
+    }
+
 
 
 }

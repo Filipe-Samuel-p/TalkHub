@@ -1,5 +1,6 @@
 package filipeProject.example.authenticationJwt.dto.eventDTOs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkDTO;
 import filipeProject.example.authenticationJwt.entities.Event;
 import filipeProject.example.authenticationJwt.entities.Talk;
@@ -23,6 +24,8 @@ public class EventDTO {
     private Instant startDate;
     private Instant endDate;
     private String place;
+
+    @JsonIgnore
     private List<TalkDTO> talks = new ArrayList<>();
 
     public EventDTO(Event entity){

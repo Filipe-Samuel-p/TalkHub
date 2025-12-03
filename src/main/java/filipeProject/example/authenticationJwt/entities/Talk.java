@@ -1,6 +1,7 @@
 package filipeProject.example.authenticationJwt.entities;
 
 import filipeProject.example.authenticationJwt.enums.DifficultyTalkLevel;
+import filipeProject.example.authenticationJwt.enums.RequestStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 
@@ -35,6 +37,8 @@ public class Talk {
     private int totalCapacity;
     private int numberAvailable;
     private String local;
+    private RequestStatus approvalStatus;
+    private Instant request_response_date;
 
     @Enumerated(EnumType.STRING)
     private DifficultyTalkLevel difficultyLevel;

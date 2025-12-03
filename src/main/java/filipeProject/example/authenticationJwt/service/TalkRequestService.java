@@ -1,6 +1,5 @@
 package filipeProject.example.authenticationJwt.service;
 
-import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkRequestDTO;
 import filipeProject.example.authenticationJwt.entities.Talk;
 import filipeProject.example.authenticationJwt.entities.TalkRequest;
 import filipeProject.example.authenticationJwt.enums.RequestStatus;
@@ -17,7 +16,7 @@ import java.util.UUID;
 @Service
 public class TalkRequestService {
 
-    private final TalkRequestRepository repository;
+  /*  private final TalkRequestRepository repository;
     private final CategoryRepository categoryRepository;
     private final EventRepository eventRepository;
     private final SpeakerRepository speakerRepository;
@@ -104,5 +103,5 @@ public class TalkRequestService {
         entity.setCategoryId(dto.getCategoryId());
         entity.setStatus(RequestStatus.PENDING);
 
-    }
+    } */
 }

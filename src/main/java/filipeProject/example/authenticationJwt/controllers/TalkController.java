@@ -2,7 +2,6 @@ package filipeProject.example.authenticationJwt.controllers;
 
 import filipeProject.example.authenticationJwt.dto.registrationDTOs.RegistrationDTO;
 import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkDTO;
-import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkRequestDTO;
 import filipeProject.example.authenticationJwt.service.TalkService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -52,5 +51,21 @@ public class TalkController {
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @PostMapping(value = "/{id}/approve")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> approveTalk(@PathVariable Long id){
+        service.approveTalk(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value = "/{id}/denied")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deniedSpeaker(@PathVariable Long id){
+        service.deniedTalk(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 }

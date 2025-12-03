@@ -1,7 +1,6 @@
 package filipeProject.example.authenticationJwt.controllers;
 
-import filipeProject.example.authenticationJwt.dto.talkDTOs.TalkRequestDTO;
-import filipeProject.example.authenticationJwt.dto.userDTOs.UserRegisterDTO;
+
 import filipeProject.example.authenticationJwt.service.TalkRequestService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,13 +10,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/talk-request")
 public class TalkRequestController {
 
-    private final TalkRequestService service;
+   /* private final TalkRequestService service;
 
     public TalkRequestController(TalkRequestService service) {
         this.service = service;
@@ -52,4 +50,6 @@ public class TalkRequestController {
         service.deniedTalkRequest(id);
         return ResponseEntity.noContent().build();
     }
+
+*/
 }

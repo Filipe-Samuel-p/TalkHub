@@ -1,15 +1,19 @@
 package filipeProject.example.authenticationJwt.dto.talkDTOs;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import filipeProject.example.authenticationJwt.dto.speakerDTOs.SpeakerDTO;
 import filipeProject.example.authenticationJwt.entities.Speaker;
 import filipeProject.example.authenticationJwt.entities.Talk;
 import filipeProject.example.authenticationJwt.enums.DifficultyTalkLevel;
+import filipeProject.example.authenticationJwt.enums.RequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,6 +31,12 @@ public class TalkDTO {
     private DifficultyTalkLevel difficultyLevel;
     private SpeakerDTO speaker;
 
+    @JsonIgnore
+    private RequestStatus approvalStatus;
+
+    @JsonIgnore
+    private Instant request_response_date;
+
     public TalkDTO(Talk entity){
       id = entity.getId();
       title = entity.getTitle();
@@ -38,6 +48,8 @@ public class TalkDTO {
       local = entity.getLocal();
       difficultyLevel = entity.getDifficultyLevel();
       speaker = new SpeakerDTO(entity.getSpeaker());
+      approvalStatus = entity.getApprovalStatus();
+      request_response_date = entity.getRequest_response_date();
     }
 
 }

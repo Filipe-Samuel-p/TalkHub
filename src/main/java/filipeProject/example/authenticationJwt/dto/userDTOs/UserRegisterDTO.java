@@ -1,5 +1,6 @@
 package filipeProject.example.authenticationJwt.dto.userDTOs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import filipeProject.example.authenticationJwt.entities.User;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
